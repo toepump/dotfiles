@@ -1,0 +1,5 @@
+command = "/usr/bin/fish"
+theme = Catppuccin Frappe
+font-family = "FiraCode Nerd Font"
+font-size = 10
+adjust-cell-height = 10
