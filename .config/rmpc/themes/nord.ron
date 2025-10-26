@@ -62,6 +62,17 @@
             alignment: Right,
         ),
     ],
+	cava: (
+		bar_color: Gradient({
+
+			  0: "#a6d189",
+
+			 50: "#9c9ecc",
+
+			100: "#ef9f76",
+
+		})
+	),
     layout: Split(
         direction: Vertical,
         panes: [

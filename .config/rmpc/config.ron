@@ -26,6 +26,28 @@
         vertical_align: Center,
         horizontal_align: Center,
     ),
+	cava: (
+		framerate: 60, // default 60
+		autosens: true, // default true
+		sensitivity: 100, // default 100
+		lower_cutoff_freq: 50, // not passed to cava if not provided
+		higher_cutoff_freq: 10000, // not passed to cava if not provided
+		input: (
+			method: Fifo,
+			source: "/tmp/mpd.fifo",
+			sample_rate: 44100,
+			channels: 2,
+			sample_bits: 16,
+		),
+		smoothing: (
+			noise_reduction: 77, // default 77
+			monstercat: false, // default false
+			waves: false, // default false
+		),
+		// this is a list of floating point numbers thats directly passed to cava
+		// they are passed in order that they are defined
+		eq: []
+	),
     keybinds: (
         global: {
             ":":       CommandMode,
@@ -151,13 +173,13 @@
                                             ),
                                             (
                                                 size: "25%",
-                                                borders: "NONE",
+                                                borders: "ALL",
                                                 pane: Split(
                                                     direction: Vertical,
                                                     panes: [
                                                         (
                                                             size: "100%",
-                                                            pane: Pane(Lyrics),
+                                                            pane: Pane(Cava),
                                                         ),
                                                     ]
                                                 ),
@@ -171,25 +193,11 @@
                 ],
             ),
         ),
-        (
-            name: "Directories",
-            pane: Split(
-                direction: Horizontal,
-                panes: [(size: "100%", borders: "ALL", pane: Pane(Directories))],
-            ),
-        ),
-        (
+		(
             name: "Artists",
             pane: Split(
                 direction: Horizontal,
                 panes: [(size: "100%", borders: "ALL", pane: Pane(Artists))],
-            ),
-        ),
-        (
-            name: "Album Artists",
-            pane: Split(
-                direction: Horizontal,
-                panes: [(size: "100%", borders: "ALL", pane: Pane(AlbumArtists))],
             ),
         ),
         (
@@ -213,11 +221,11 @@
                 panes: [(size: "100%", borders: "ALL", pane: Pane(Search))],
             ),
         ),
-        (
-            name: "Browser",
+		(
+            name: "Directories",
             pane: Split(
                 direction: Horizontal,
-                panes: [(size: "100%", borders: "ALL", pane: Pane(Browser(root_tag: "Artist")))],
+                panes: [(size: "100%", borders: "ALL", pane: Pane(Directories))],
             ),
         ),
         (
