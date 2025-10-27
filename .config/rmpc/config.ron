@@ -157,7 +157,7 @@
                             panes: [
                                 (
                                     size: "70%",
-                                    borders: "ALL",
+                                    borders: "NONE",
                                     pane: Pane(Queue),
                                 ),
                                 (
@@ -167,13 +167,13 @@
                                         direction: Vertical,
                                         panes: [
                                             (
-                                                size: "75%",
-                                                borders: "ALL",
+                                                size: "60%",
+                                                borders: "LEFT | RIGHT",
                                                 pane: Pane(AlbumArt),
                                             ),
                                             (
-                                                size: "25%",
-                                                borders: "ALL",
+                                                size: "40%",
+                                                borders: "TOP",
                                                 pane: Split(
                                                     direction: Vertical,
                                                     panes: [
