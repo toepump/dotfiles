@@ -201,13 +201,6 @@
             ),
         ),
         (
-            name: "Albums",
-            pane: Split(
-                direction: Horizontal,
-                panes: [(size: "100%", borders: "ALL", pane: Pane(Albums))],
-            ),
-        ),
-        (
             name: "Playlists",
             pane: Split(
                 direction: Horizontal,
@@ -222,19 +215,12 @@
             ),
         ),
 		(
-            name: "Directories",
+            name: "Files",
             pane: Split(
                 direction: Horizontal,
                 panes: [(size: "100%", borders: "ALL", pane: Pane(Directories))],
             ),
         ),
-        (
-            name: "Lyrics",
-            pane: Split(
-                direction: Horizontal,
-                panes: [(size: "100%", borders: "ALL", pane: Pane(Lyrics))],
-            ),
-        ),
-    ],
+      ],
 )
 

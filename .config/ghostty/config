@@ -1,5 +1,5 @@
 command = "/usr/bin/fish"
-theme = Catppuccin Frappe
+theme = Catppuccin Mocha
 font-family = "FiraCode Nerd Font"
 font-size = 10
 adjust-cell-height = 10
