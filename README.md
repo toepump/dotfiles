@@ -42,6 +42,19 @@ You should then have all of the symlinks generated into the home directory.
 
 5. To Unstow, run `stow -D .`
 
+## Git Submodules
+
+> [!NOTE]
+> As writing this, there are 2 submodules used in this repo. My own (`toepump/toepump.nvim`) and `catppuccin/tmux`.
+
+Below is a quick reference on how to manage the submodules.
+
+| Action                                          | Command                                                    |
+| ----------------------------------------------- | ---------------------------------------------------------- |
+| Sync submodules to commits tracked by main repo | `git submodule update --init --recursive`                  |
+| Pull latest from submodule remotes              | `git submodule update --remote --merge`                    |
+| Pull main repo + submodules together            | `git pull --recurse-submodules`                            |
+| Commit submodule update                         | `git add .config/nvim && git commit -m "Update submodule"` |
 
 ## (Optional) Isolated Directories
 
