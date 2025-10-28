@@ -7,10 +7,15 @@ These are my dotfiles for my tool/environment configurations.
 1. Clone this repo to the your home directory (typically `~/`).
 
 ```
-git clone git@github.com:toepump/dotfiles.git
+git clone --recurse-submodules git@github.com:toepump/dotfiles.git
 ```
 
-You should end up with `~/dotfiles/` directory and inside of it you should see a hidden `.config` directory. You will also see any other global configs like `.gitconfig` for example.
+You should end up with `~/dotfiles/` directory and inside of it you should see a hidden `.config` directory. 
+You will also see any other global configs like `.gitconfig` for example.
+
+> [!NOTE] 
+> This dotfiles repo contains a git submodule for `toepump.nvim` repo. This repo contains my standalone neovim configuration.
+> Because of this, the above clone command has the `--recurve-submodules` flag in order to ensure that the submodule is cloned as well.
 
 2. Go into the dotfiles directory: 
 
@@ -47,8 +52,11 @@ To stow/unstow that individual directory run `stow nvim` or `stow -D nvim` respe
 
 #### Why have Isolated Directories?
 
-I work across a few different OSes for work personal projects. So sometimes it's no appropriate to just copy all of my configs to a system where that configuration or tool doesn't even work.
+> [!NOTE]
+> At the time of writing this, I'm not using any isolated directories. So this would be future addition.
+
+I work across a few different OSes for work personal projects. So sometimes it's not appropriate to just copy all of my configs to a system where that configuration or tool doesn't even work.
 
 For example, I use Ghostty terminal at home, but Kitty at work.
 Also, some configurations may have file paths or such that only work on one OS vs another.
-In those cases it's better to separate those configs and pick-and-choose which one I want to edit and load.
+In those cases it would likely be better to separate those configs and pick-and-choose which one I want to edit and load.
