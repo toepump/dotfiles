@@ -1,6 +1,6 @@
 [submodule "nvim/.config/nvim"]
 	path = nvim/.config/nvim
-	url = https://github.com/toepump/toepump.nvim
+	url = git@github.com:toepump/toepump.nvim
 [submodule "tmux/.config/tmux/plugins/catppuccin/tmux"]
 	path = tmux/.config/tmux/plugins/catppuccin/tmux
-	url = https://github.com/catppuccin/tmux.git
+	url = git@github.com:catppuccin/tmux.git

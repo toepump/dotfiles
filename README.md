@@ -14,8 +14,9 @@ You should end up with `~/dotfiles/` directory and inside of it you should see a
 You will also see any other global configs like `.gitconfig` for example.
 
 > [!NOTE] 
-> This dotfiles repo contains git submodules for `toepump/toepump.nvim` and `catppuccin/tmux`. The first repo contains my standalone neovim configuration.
-> Because of this, the above clone command has the `--recurve-submodules` flag in order to ensure that the submodule is cloned as well.
+> This dotfiles repo contains git submodules for `toepump/toepump.nvim`, `catppuccin/tmux`. 
+> The first repo contains my standalone neovim configuration.
+> Because of this, the above clone command has the `--recurve-submodules` flag in order to ensure that the submodules are cloned as well.
 
 2. Go into the dotfiles directory: 
 
@@ -74,13 +75,14 @@ For example: `stow -D nvim`
 ## Git Submodules
 
 > [!NOTE]
-> As writing this, there are 2 submodules used in this repo. My own (`toepump/toepump.nvim`) and `catppuccin/tmux`.
+> As writing this, there are **2** submodules used in this repo.
 
 Below is a quick reference on how to manage the submodules.
 
-| Action                                          | Command                                                    |
-| ----------------------------------------------- | ---------------------------------------------------------- |
-| Sync submodules to commits tracked by main repo | `git submodule update --init --recursive`                  |
-| Pull latest from submodule remotes              | `git submodule update --remote --merge`                    |
-| Pull main repo + submodules together            | `git pull --recurse-submodules`                            |
-| Commit submodule update                         | `git add .config/nvim && git commit -m "Update submodule"` |
+| Action                                          | Command                                                                    |
+| ----------------------------------------------- | -------------------------------------------------------------------------- |
+| Add a new submodule                             | `git submodule add https://github.com/USER/REPO.git .config/{TARGET_DIR}`  |
+| Sync submodules to commits tracked by main repo | `git submodule update --init --recursive`                                  |
+| Pull latest from submodule remotes              | `git submodule update --remote --merge`                                    |
+| Pull main repo + submodules together            | `git pull --recurse-submodules`                                            |
+| Commit submodule update                         | `git add .config/nvim && git commit -m "Update submodule"`                 |
