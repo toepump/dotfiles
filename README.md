@@ -2,7 +2,7 @@
 
 These are my dotfiles for my tool/environment configurations.
 
-## How to Use
+## Initial Setup
 
 1. Clone this repo to the your home directory (typically `~/`).
 
@@ -14,7 +14,7 @@ You should end up with `~/dotfiles/` directory and inside of it you should see a
 You will also see any other global configs like `.gitconfig` for example.
 
 > [!NOTE] 
-> This dotfiles repo contains a git submodule for `toepump.nvim` repo. This repo contains my standalone neovim configuration.
+> This dotfiles repo contains git submodules for `toepump/toepump.nvim` and `catppuccin/tmux`. The first repo contains my standalone neovim configuration.
 > Because of this, the above clone command has the `--recurve-submodules` flag in order to ensure that the submodule is cloned as well.
 
 2. Go into the dotfiles directory: 
@@ -32,15 +32,44 @@ yay stow
 Use whichever package manager you use for your OS. For macos, you can use `brew install stow`.
 `stow` will take the contents and structure of your dotfiles directory and mirror it to the home directory (`~/`) via symlinks.
 
-4. In `~/dotfiles`, run 
+## Stowing
+
+1. If you want to stow all the valid dotfiles in `~/dotfiles`, navigate into `~/dotfiles` and run: 
 
 ```
-stow .
+./stow_all.fish
 ```
 
 You should then have all of the symlinks generated into the home directory.
 
-5. To Unstow, run `stow -D .`
+2. If you want to stow only some of the directories, then run:
+
+```
+stow {DIRECTORY_NAME}
+```
+
+For example: `stow nvim`
+
+> [!NOTE]
+> Why only stow pieces? Because not all of the the dotfiles may be valid in all scenarios. For example, if you don't use `fish` at work then why stow it? Additionally, the `.gitconfig` in particular contains things like your git email and username, which may not be the same for personal vs professional use. 
+
+## Un-Stowing
+
+1. If you want to un-stow all the valid dotfiles in `~/dotfiles`, navigate into `~/dotfiles` and run:
+
+```
+./unstow_all.fish
+```
+
+This will then remove all the symlinks that were generated into the home directory.
+
+2. If you want to un-stow only some of the directories, then run:
+
+```
+stow -D {DIRECTORY_NAME}
+```
+
+For example: `stow -D nvim`
 
 ## Git Submodules
 
@@ -55,21 +84,3 @@ Below is a quick reference on how to manage the submodules.
 | Pull latest from submodule remotes              | `git submodule update --remote --merge`                    |
 | Pull main repo + submodules together            | `git pull --recurse-submodules`                            |
 | Commit submodule update                         | `git add .config/nvim && git commit -m "Update submodule"` |
-
-## (Optional) Isolated Directories
-
-If the contents of `dotfiles` has a directory in it (for example, `~/nvim/`), then that means that that directory should be stowed/unstowed individually.
-It will not be included in the above `stow .` command.
-
-To stow/unstow that individual directory run `stow nvim` or `stow -D nvim` respectively.
-
-#### Why have Isolated Directories?
-
-> [!NOTE]
-> At the time of writing this, I'm not using any isolated directories. So this would be future addition.
-
-I work across a few different OSes for work personal projects. So sometimes it's not appropriate to just copy all of my configs to a system where that configuration or tool doesn't even work.
-
-For example, I use Ghostty terminal at home, but Kitty at work.
-Also, some configurations may have file paths or such that only work on one OS vs another.
-In those cases it would likely be better to separate those configs and pick-and-choose which one I want to edit and load.
