@@ -1,5 +1,5 @@
 [include]
-    path = /home/toepump/.config/delta/themes.gitconfig
+    path = /Users/mikey/.config/delta/themes.gitconfig
 
 [user]
     email = mikeykentarocho@gmail.com

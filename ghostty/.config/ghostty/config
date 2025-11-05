@@ -1,4 +1,4 @@
-command = "/usr/bin/fish"
+command = "/opt/homebrew/bin/fish"
 theme = Catppuccin Mocha
 font-family = "FiraCode Nerd Font"
 font-size = 10
