@@ -5,5 +5,11 @@ end
 alias cdp="cd ~/Documents/projects/"
 alias cdd="cd ~/dotfiles/"
 
+# set the XDG_CONFIG_HOME for terminal sessions.
+# macos uses a different default for lazygit specifically which is why this
+# is needed.
+export XDG_CONFIG_HOME=$HOME/.config
+
+
 # start starship prompt when fish initializes
 starship init fish | source
