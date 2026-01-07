@@ -1,6 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export STARSHIP_CONFIG:/home/toepump/\x2econfig/starship/starship\x2etoml
-SETUVAR __fish_initialized:4300
+SETUVAR __fish_initialized:3800
 SETUVAR fish_greeting:
+SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_user_paths:/usr/bin
