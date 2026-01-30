@@ -3,6 +3,8 @@ if status is-interactive
 end
 
 alias cdp="cd ~/Documents/projects/"
+alias cdpg="cd ~/Documents/projects/godot/gun-beast-heroes-3"
+alias cdpb="cd ~/Documents/projects/godot/joepump/bulletfall-1988/"
 alias cdd="cd ~/dotfiles/"
 
 # set the XDG_CONFIG_HOME for terminal sessions.
