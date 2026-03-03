@@ -446,14 +446,14 @@
     syntax-theme = base16
     line-numbers = true
     side-by-side = true
-    file-style = brightwhite
+    file-style = yellow box bold
     file-decoration-style = none
     file-added-label = [+]
     file-copied-label = [==]
     file-modified-label = [*]
     file-removed-label = [-]
     file-renamed-label = [->]
-    hunk-header-decoration-style = "#3e3e43" box ul
+    hunk-header-decoration-style = "#3e3e43" ul
     plus-style = brightgreen black
     plus-emph-style = black green
     minus-style = brightred black
