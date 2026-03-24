@@ -156,12 +156,7 @@
                             direction: Horizontal,
                             panes: [
                                 (
-                                    size: "70%",
-                                    borders: "NONE",
-                                    pane: Pane(Queue),
-                                ),
-                                (
-                                    size: "30%",
+                                    size: "40%",
                                     borders: "NONE",
                                     pane: Split(
                                         direction: Vertical,
@@ -186,6 +181,11 @@
                                             ),
                                         ]
                                     ),
+                                ),
+                                (
+                                    size: "60%",
+                                    borders: "NONE",
+                                    pane: Pane(Queue),
                                 ),
                             ]
                         ),

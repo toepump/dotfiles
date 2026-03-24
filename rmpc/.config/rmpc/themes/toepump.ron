@@ -23,7 +23,7 @@
     highlight_border_style: (fg: "#1e1e2e"),
     symbols: (song: "󰝚 ", dir: " ", playlist: "󰲸 ", marker: "* ", ellipsis: "..."),
     progress_bar: (
-        symbols: ["≡", "☰☰☰", "≡"],
+        symbols: ["≡", "≡", "≡"],
         track_style: (fg: "#3b4252"),
         elapsed_style: (fg: "#fab387"),
         thumb_style: (fg: "#f9e2af", modifiers: "Bold"),
