@@ -29,19 +29,7 @@ require 'toepump.godot'
 require('lazy').setup({
     { import = 'toepump.plugins' },
 
-    'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-    -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
-    -- Alternatively, use `config = function() ... end` for full control over the configuration.
-    -- If you prefer to call `setup` explicitly, use:
-    --    {
-    --        'lewis6991/gitsigns.nvim',
-    --        config = function()
-    --            require('gitsigns').setup({
-    --                -- Your gitsigns configuration here
-    --            })
-    --        end,
-    --    }
-    -- See `:help gitsigns` to understand what the configuration keys do
+    'NMAC427/guess-indent.nvim',
     { -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
         opts = {
@@ -54,20 +42,6 @@ require('lazy').setup({
             },
         },
     },
-
-    -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-    --
-    -- This is often very useful to both group configuration, as well as handle
-    -- lazy loading plugins that don't need to be loaded immediately at startup.
-    --
-    -- For example, in the following configuration, we use:
-    --  event = 'VimEnter'
-    --
-    -- which loads which-key before all the UI elements are loaded. Events can be
-    -- normal autocommands events (`:help autocmd-events`).
-    --
-    -- Then, because we use the `opts` key (recommended), the configuration runs
-    -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
     { -- Useful plugin to show you pending keybinds.
         'folke/which-key.nvim',
@@ -129,25 +103,15 @@ require('lazy').setup({
             'nvim-lua/plenary.nvim',
             { -- If encountering errors, see telescope-fzf-native README for installation instructions
                 'nvim-telescope/telescope-fzf-native.nvim',
-
-                -- `build` is used to run some command when the plugin is installed/updated.
-                -- This is only run then, not every time Neovim starts up.
                 build = 'make',
-
-                -- `cond` is a condition used to determine whether this plugin should be
-                -- installed and loaded.
                 cond = function()
                     return vim.fn.executable 'make' == 1
                 end,
             },
             { 'nvim-telescope/telescope-ui-select.nvim' },
-
-            -- Useful for getting pretty icons, but requires a Nerd Font.
             { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
         },
         config = function()
-            -- [[ Configure Telescope ]]
-            -- See `:help telescope` and `:help telescope.setup()`
             require('telescope').setup {
                 extensions = {
                     ['ui-select'] = {
@@ -329,7 +293,6 @@ require('lazy').setup({
             require('mini.surround').setup()
 
             local statusline = require 'mini.statusline'
-            -- set use_icons to true if you have a Nerd Font
             statusline.setup {
                 use_icons = vim.g.have_nerd_font,
                 -- toepump: This is a custom configuration (w/ ChatGPT help), to make the filename shorter.
