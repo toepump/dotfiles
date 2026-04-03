@@ -7,5 +7,9 @@ alias cdpg="cd ~/Documents/projects/godot/gun-beast-heroes-3"
 alias cdpb="cd ~/Documents/projects/godot/joepump/bulletfall-1988/"
 alias cdd="cd ~/dotfiles/"
 
+function nv12
+	env NVIM_APPNAME=nvim-v12 ~/.local/share/bob/v0.12.0/bin/nvim $argv
+end
+
 # start starship prompt when fish initializes
 starship init fish | source
