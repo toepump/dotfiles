@@ -343,14 +343,15 @@ require('lazy').setup({
     },
     { -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
         lazy = false,
         build = ':TSUpdate',
         config = function()
             local treesitter = require 'nvim-treesitter'
             treesitter.setup()
-            treesitter.install { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+            treesitter.install { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'gdscript' }
             vim.api.nvim_create_autocmd('FileType', {
-                pattern = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+                pattern = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'gdscript' },
                 callback = function()
                     -- syntax highlighting, provided by Neovim
                     vim.treesitter.start()
