@@ -291,6 +291,30 @@ require('lazy').setup({
         config = function()
             require('mini.ai').setup { n_lines = 500 }
             require('mini.surround').setup()
+            require('mini.pairs').setup()
+            require('mini.files').setup {
+                -- Customization of explorer windows
+                windows = {
+                    -- Maximum number of windows to show side by side
+                    max_number = math.huge,
+                    -- Whether to show preview of file/directory under cursor
+                    preview = true,
+                    -- Width of focused window
+                    width_focus = 30,
+                    -- Width of non-focused window
+                    width_nofocus = 30,
+                    -- Width of preview window
+                    width_preview = 100,
+                },
+            }
+
+            -- Mini.Files toggle open/close
+            vim.keymap.set('n', '<leader>t', function()
+                -- This opens mini.files in the directory of the current file
+                if not MiniFiles.close() then
+                    MiniFiles.open(vim.api.nvim_buf_get_name(0))
+                end
+            end, { desc = '[T]oggle Mini Files' })
 
             local statusline = require 'mini.statusline'
             statusline.setup {
