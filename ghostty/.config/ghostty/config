@@ -1,4 +1,4 @@
-command = fish
+# no `command`: use the login shell (fish), so no path is needed on mac or linux
 theme = Catppuccin Mocha
 font-family = "FiraCode Nerd Font"
 font-size = 10
