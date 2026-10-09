@@ -2,87 +2,210 @@
 
 These are my dotfiles for my tool/environment configurations.
 
-## Initial Setup
+How it works: install the tools, clone this repo into `~`, stow it, and make
+fish your login shell. After that, you only `git pull` to update.
 
-1. Clone this repo to the your home directory (typically `~/`).
+Each top-level folder (`fish`, `nvim`, `tmux`, ...) is a stow package: `stow`
+mirrors its contents into `~` as symlinks.
 
+---
+
+## Linux (Arch)
+
+### 1. Install the tools
+
+```bash
+sudo pacman -S git stow fish neovim starship tmux lazygit git-delta \
+    kitty ghostty ttf-firacode-nerd mpd rmpc openssh
 ```
+
+### 2. Give GitHub an SSH key
+
+The repo and its submodules clone over SSH, so this must come first.
+
+```bash
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+```
+
+Paste the output into GitHub → Settings → SSH and GPG keys → New SSH key.
+
+### 3. Clone into your home folder
+
+```bash
+cd ~
 git clone --recurse-submodules git@github.com:toepump/dotfiles.git
 ```
 
-You should end up with `~/dotfiles/` directory and inside of it you should see a hidden `.config` directory. 
-You will also see any other global configs like `.gitconfig` for example.
+`--recurse-submodules` also clones the 2 submodules: `toepump/toepump.nvim`
+(my neovim config) and `catppuccin/tmux`.
 
-> [!NOTE] 
-> This dotfiles repo contains git submodules for `toepump/toepump.nvim`, `catppuccin/tmux`. 
-> The first repo contains my standalone neovim configuration.
-> Because of this, the above clone command has the `--recurve-submodules` flag in order to ensure that the submodules are cloned as well.
+### 4. Stow
 
-2. Go into the dotfiles directory: 
-
-```
-cd ~/dotfiles`
-```
-
-3. Ensure that you have GNU Stow installed 
-
-```
-yay stow
-```
-
-Use whichever package manager you use for your OS. For macos, you can use `brew install stow`.
-`stow` will take the contents and structure of your dotfiles directory and mirror it to the home directory (`~/`) via symlinks.
-
-## Stowing
-
-1. If you want to stow all the valid dotfiles in `~/dotfiles`, navigate into `~/dotfiles` and run: 
-
-```
+```bash
+cd ~/dotfiles
 ./stow_all.fish
 ```
 
-You should then have all of the symlinks generated into the home directory.
-
-2. If you want to stow only some of the directories, then run:
-
-```
-stow {DIRECTORY_NAME}
-```
-
-For example: `stow nvim`
+If stow says a file "already exists", a default config is in the way (often
+`~/.gitconfig`). Move it aside (`mv ~/.gitconfig ~/.gitconfig.bak`) and run
+`./stow_all.fish` again.
 
 > [!NOTE]
-> Why only stow pieces? Because not all of the the dotfiles may be valid in all scenarios. For example, if you don't use `fish` at work then why stow it? Additionally, the `.gitconfig` in particular contains things like your git email and username, which may not be the same for personal vs professional use. 
+> You can stow just some packages instead (see [Stowing individual packages](#stowing-individual-packages)).
 
-## Un-Stowing
+### 5. Make fish your login shell
 
-1. If you want to un-stow all the valid dotfiles in `~/dotfiles`, navigate into `~/dotfiles` and run:
-
-```
-./unstow_all.fish
+```bash
+chsh -s /usr/bin/fish
 ```
 
-This will then remove all the symlinks that were generated into the home directory.
+### 6. Log out and back in
 
-2. If you want to un-stow only some of the directories, then run:
+This is required so every terminal and tmux picks up fish.
 
+### 7. Check
+
+Open a new terminal:
+
+```fish
+echo $SHELL          # /usr/bin/fish
 ```
-stow -D {DIRECTORY_NAME}
+
+You should see the starship prompt. Run `tmux new` and check `echo $SHELL`
+there too.
+
+---
+
+## macOS
+
+### 1. Install Homebrew
+
+```bash
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-For example: `stow -D nvim`
+Follow the "Next steps" it prints, so `brew` works in this terminal.
 
-## Git Submodules
+### 2. Install the tools
+
+```bash
+brew install git stow fish neovim starship tmux lazygit git-delta rmpc
+brew install --cask ghostty kitty font-fira-code-nerd-font
+```
+
+Skip whichever terminal (ghostty or kitty) you don't use.
+
+### 3. Give GitHub an SSH key
+
+The repo and its submodules clone over SSH, so this must come first.
+
+```bash
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+```
+
+Paste the output into GitHub → Settings → SSH and GPG keys → New SSH key.
+
+### 4. Clone into your home folder
+
+```bash
+cd ~
+git clone --recurse-submodules git@github.com:toepump/dotfiles.git
+```
+
+`--recurse-submodules` also clones the 2 submodules: `toepump/toepump.nvim`
+(my neovim config) and `catppuccin/tmux`.
+
+### 5. Stow
+
+```bash
+cd ~/dotfiles
+./stow_all.fish
+```
+
+If stow says a file "already exists", a default config is in the way (often
+`~/.gitconfig`). Move it aside (`mv ~/.gitconfig ~/.gitconfig.bak`) and run
+`./stow_all.fish` again.
 
 > [!NOTE]
-> As writing this, there are **2** submodules used in this repo.
+> You can stow just some packages instead (see [Stowing individual packages](#stowing-individual-packages)).
 
-Below is a quick reference on how to manage the submodules.
+`mpd` gets stowed too. It's Linux-only, but harmless on a Mac.
+
+### 6. Make fish your login shell
+
+```bash
+grep fish /etc/shells || echo "$(brew --prefix)/bin/fish" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/fish"
+```
+
+The first line adds fish to the list of allowed shells only if it's missing.
+
+### 7. Log out and back in
+
+This is required so every terminal and tmux picks up fish.
+
+### 8. Check
+
+Open Ghostty or kitty:
+
+```fish
+echo $SHELL                      # /opt/homebrew/bin/fish
+command -v starship nvim delta   # each prints a path
+lazygit --print-config-dir       # ~/.config/lazygit
+```
+
+You should see the starship prompt. Run `tmux new` and check `echo $SHELL`
+there too.
+
+---
+
+## Updating later
+
+On any machine:
+
+```bash
+cd ~/dotfiles
+git pull --recurse-submodules
+```
+
+Make changes on one machine, commit, push, then pull on the other. Don't
+hand-edit paths per machine. If something needs to differ, make the config
+detect it (see `config.fish` for examples).
+
+New package folder added to the repo? Run `stow <folder>` (or
+`./stow_all.fish` again).
+
+## Stowing individual packages
+
+Run these from `~/dotfiles`:
+
+| Action | Command |
+|---|---|
+| Stow one package | `stow {DIRECTORY_NAME}` (e.g. `stow nvim`) |
+| Un-stow one package | `stow -D {DIRECTORY_NAME}` |
+| Stow / un-stow everything | `./stow_all.fish` / `./unstow_all.fish` |
+
+> [!NOTE]
+> Why only stow pieces? Not all of the dotfiles are valid in all scenarios. For example, if you don't use `fish` at work then why stow it? Additionally, the `.gitconfig` in particular contains things like your git email and username, which may not be the same for personal vs professional use.
+
+## Git submodules
 
 | Action                                          | Command                                                                    |
 | ----------------------------------------------- | -------------------------------------------------------------------------- |
-| Add a new submodule                             | `git submodule add https://github.com/USER/REPO.git .config/{TARGET_DIR}`  |
+| Add a new submodule                             | `git submodule add https://github.com/USER/REPO.git {PKG}/.config/{TARGET}`|
 | Sync submodules to commits tracked by main repo | `git submodule update --init --recursive`                                  |
 | Pull latest from submodule remotes              | `git submodule update --remote --merge`                                    |
 | Pull main repo + submodules together            | `git pull --recurse-submodules`                                            |
-| Commit submodule update                         | `git add .config/nvim && git commit -m "Update submodule"`                 |
+| Commit submodule update                         | `git add nvim/.config/nvim && git commit -m "Update submodule"`            |
+
+## If something goes wrong
+
+| Problem | Fix |
+|---|---|
+| Terminal opens bash/zsh, not fish | Redo the "login shell" step, then log out and back in. Run `tmux kill-server` too. |
+| `command not found` for brew tools (Mac) | Open a new terminal. If it still happens, check `ls /opt/homebrew/bin/brew` exists. |
+| nvim has no plugins / tmux has no theme | Submodules are missing: `git submodule update --init --recursive`, then `./stow_all.fish`. |
+| Undo all symlinks | `cd ~/dotfiles && ./unstow_all.fish` |
