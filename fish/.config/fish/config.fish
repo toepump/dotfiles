@@ -13,6 +13,9 @@ end
 
 fish_add_path ~/.local/bin
 
+# macOS tools (e.g. lazygit) default to ~/Library/Application Support
+# unless this is set; on Linux this is already the default.
+set -gx XDG_CONFIG_HOME ~/.config
 set -gx STARSHIP_CONFIG ~/.config/starship/starship.toml
 set -g fish_greeting
 
