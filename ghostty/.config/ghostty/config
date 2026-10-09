@@ -1,4 +1,4 @@
-command = "/usr/bin/fish"
+command = fish
 theme = Catppuccin Mocha
 font-family = "FiraCode Nerd Font"
 font-size = 10
