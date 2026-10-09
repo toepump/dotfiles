@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Run pi in a rootless podman box that can only see the current folder.
+set -euo pipefail
+PI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"  # ~/dotfiles/pi
+SBX_HOME="$HOME/.local/share/pi-sandbox/home"                  # per-machine, not in git
+PROJ="$(pwd -P)"
+
+# Never expose your whole home folder (or the whole system)
+case "$PROJ" in
+  "$HOME"|/) echo "pis: run this inside a project folder, not $PROJ" >&2; exit 1;;
+esac
+
+mkdir -p "$SBX_HOME/.pi/agent"
+
+args=(
+  --rm -it --init
+  --userns=keep-id                                # files stay owned by you
+  --cap-drop=all --security-opt=no-new-privileges # no admin powers inside
+  -e HOME=/home/agent -e TERM -e COLORTERM
+  -v "$SBX_HOME:/home/agent"                      # caches etc. (per machine)
+  -v "$PI_DIR/agent:/home/agent/.pi/agent"        # pi config from this repo (logins/sessions are gitignored)
+  -v "$PROJ:$PROJ"                                # the project, at the same path as outside
+  -w "$PROJ"
+)
+
+# Linux only: box's localhost:11434/8080 -> your Ollama / llama-server.
+# On macOS podman runs in a VM and there are no local models.
+if [ "$(uname)" = Linux ]; then
+  args+=( --network=pasta:-T,11434,-T,8080 )
+fi
+
+# Make git hooks/config read-only so the agent can't plant
+# something that runs on your real computer later
+if [ -f "$PROJ/.git/config" ]; then
+  args+=( -v "$PROJ/.git/config:$PROJ/.git/config:ro" )
+fi
+if [ -d "$PROJ/.git/hooks" ]; then
+  args+=( -v "$PROJ/.git/hooks:$PROJ/.git/hooks:ro" )
+fi
+
+exec podman run "${args[@]}" pi-sandbox "$@"

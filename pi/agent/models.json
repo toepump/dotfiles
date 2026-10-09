@@ -1,0 +1,13 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://127.0.0.1:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [
+        { "id": "gpt-oss-32k:latest", "name": "gpt-oss 20B (32k context)", "contextWindow": 32768, "reasoning": true },
+        { "id": "gpt-oss-16k:latest", "name": "gpt-oss 20B (16k context)", "contextWindow": 16384, "reasoning": true }
+      ]
+    }
+  }
+}

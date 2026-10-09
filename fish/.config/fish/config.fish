@@ -12,6 +12,7 @@ for brew in /opt/homebrew/bin/brew /usr/local/bin/brew   # Apple Silicon, Intel
 end
 
 fish_add_path ~/.local/bin
+fish_add_path ~/dotfiles/pi/bin   # pi + pis-update (see README)
 
 # macOS tools (e.g. lazygit) default to ~/Library/Application Support
 # unless this is set; on Linux this is already the default.
@@ -23,7 +24,7 @@ alias cdp="cd ~/Documents/projects/"
 alias cdpg="cd ~/Documents/projects/godot/gun-beast-heroes-3"
 alias cdpb="cd ~/Documents/projects/godot/joepump/bulletfall-1988/"
 alias cdd="cd ~/dotfiles/"
-alias cdpi="cd ~/.local/share/pi-sandbox/home/.pi/agent/"
+alias cdpi="cd ~/dotfiles/pi/agent/"
 
 # start starship prompt when fish initializes (skip if not installed)
 if command -q starship

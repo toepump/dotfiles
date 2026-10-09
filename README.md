@@ -16,7 +16,7 @@ mirrors its contents into `~` as symlinks.
 
 ```bash
 sudo pacman -S git stow fish neovim starship tmux lazygit git-delta \
-    kitty ghostty ttf-firacode-nerd mpd rmpc openssh
+    kitty ghostty ttf-firacode-nerd mpd rmpc openssh podman
 ```
 
 ### 2. Give GitHub an SSH key
@@ -75,6 +75,16 @@ echo $SHELL          # /usr/bin/fish
 You should see the starship prompt. Run `tmux new` and check `echo $SHELL`
 there too.
 
+### 8. Set up pi (coding agent)
+
+```fish
+pis-update        # builds the pi container (takes a few minutes)
+cd ~/some/project
+pi                # then type /login and paste your OpenCode Go key
+```
+
+See [pi sandbox](#pi-sandbox) for how it works.
+
 ---
 
 ## macOS
@@ -91,7 +101,7 @@ Follow the "Next steps" it prints, so `brew` works in this terminal.
 ### 2. Install the tools
 
 ```bash
-brew install git stow fish neovim starship tmux lazygit git-delta rmpc
+brew install git stow fish neovim starship tmux lazygit git-delta rmpc podman
 brew install --cask ghostty kitty font-fira-code-nerd-font
 ```
 
@@ -160,6 +170,23 @@ lazygit --print-config-dir       # ~/.config/lazygit
 You should see the starship prompt. Run `tmux new` and check `echo $SHELL`
 there too.
 
+### 9. Set up pi (coding agent)
+
+podman runs containers inside a small Linux VM on macOS. Create it once:
+
+```fish
+podman machine init
+podman machine start   # after a reboot, run this again before using pi
+```
+
+Then:
+
+```fish
+pis-update        # builds the pi container (takes a few minutes)
+cd ~/some/project
+pi                # then type /login and paste your OpenCode Go key
+```
+
 ---
 
 ## Updating later
@@ -177,6 +204,32 @@ detect it (see `config.fish` for examples).
 
 New package folder added to the repo? Run `stow <folder>` (or
 `./stow_all.fish` again).
+
+Pulled a change to `pi/Containerfile`? Run `pis-update` on that machine.
+
+## pi sandbox
+
+`pi/` holds the pi coding agent setup. It is not a stow package;
+`config.fish` puts `pi/bin` on PATH.
+
+| Path | What it is |
+|---|---|
+| `pi/bin/pi` | Starts pi in a podman container that can only see the current folder |
+| `pi/bin/pis-update` | Rebuilds the container image (latest pi + updates) |
+| `pi/Containerfile` | Recipe for the container |
+| `pi/agent/` | pi's config, mounted into the container as `~/.pi/agent` |
+
+Shared via git: `settings.json`, `models.json`, `AGENTS.md`, `skills/`,
+`themes/`. Per machine (gitignored): `auth.json` (login), `sessions/`, `npm/`
+(installed plugins), caches. The container's home folder is
+`~/.local/share/pi-sandbox/home` (per machine, not in git).
+
+Changes pi makes to its settings (e.g. via `/model`) show up in `git status`.
+Commit them like any other change.
+
+The only Linux/Mac difference is in `pi/bin/pi`: on Linux the container can
+reach local models (Ollama on port 11434, llama-server on 8080); on macOS it
+can't. The `ollama/…` model still shows in `/model` on the Mac but won't work.
 
 ## Stowing individual packages
 

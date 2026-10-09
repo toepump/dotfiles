@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Rebuild the pi box from scratch: latest pi + security updates,
+# with the same Node major version as this computer.
+set -euo pipefail
+PI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"  # ~/dotfiles/pi
+
+# Use NODE_MAJOR if given (e.g. NODE_MAJOR=22 pis-update),
+# otherwise match this computer's Node, otherwise fall back to 26.
+NODE_MAJOR="${NODE_MAJOR:-$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 26)}"
+echo "Building pi box with Node $NODE_MAJOR..."
+
+# Build from an empty folder so nothing in agent/ (like auth.json) is sent to the build
+CONTEXT="$(mktemp -d)"
+trap 'rmdir "$CONTEXT"' EXIT
+
+podman build --pull --no-cache --build-arg NODE_MAJOR="$NODE_MAJOR" \
+  -f "$PI_DIR/Containerfile" -t pi-sandbox "$CONTEXT"
+podman image prune -f   # delete old leftover images
+echo "Done. Next 'pi' run uses the new version."

@@ -1,0 +1,16 @@
+# Node version: pis-update fills this in to match your computer (26 if not given).
+# Debian "trixie" = current stable.
+ARG NODE_MAJOR=26
+FROM node:${NODE_MAJOR}-trixie-slim
+
+# Tools the agent can use. Add more here later, then rebuild.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      bash ca-certificates git ripgrep fd-find curl less \
+      python3 build-essential wl-clipboard \
+  && ln -s /usr/bin/fdfind /usr/local/bin/fd \
+  && rm -rf /var/lib/apt/lists/*
+
+# Pi itself (always the latest version at build time)
+RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+
+ENTRYPOINT ["pi"]

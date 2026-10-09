@@ -12,6 +12,10 @@ for dir in *
     if test "$dir" = "README.md"
         continue
     end
+    # pi/ is not a stow package: its scripts are put on PATH by config.fish
+    if test "$dir" = "pi"
+        continue
+    end
 
     # Only run stow if it's actually a directory
     if test -d "$dir"

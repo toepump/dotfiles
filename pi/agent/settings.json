@@ -1,0 +1,19 @@
+{
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultTools": [
+    "+codemode"
+  ],
+  "lastChangelogVersion": "1.1.0",
+  "packages": [
+    "npm:pi-web-access",
+    "npm:@juicesharp/rpiv-ask-user-question"
+  ],
+  "enabledModels": [
+    "opencode-go/deepseek-v4-flash",
+    "ollama/gpt-oss-32k:latest",
+    "opencode-go/longcat-2.5-preview-free",
+    "opencode-go/deepseek-v4-pro"
+  ],
+  "theme": "dark"
+}
