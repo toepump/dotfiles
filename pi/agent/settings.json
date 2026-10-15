@@ -4,7 +4,7 @@
   "defaultTools": [
     "+codemode"
   ],
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.2.0",
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question"

@@ -5,12 +5,30 @@ PI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"  # ~/dotfiles/pi
 SBX_HOME="$HOME/.local/share/pi-sandbox/home"                  # per-machine, not in git
 PROJ="$(pwd -P)"
 
-# Never expose your whole home folder (or the whole system)
+ALLOWED="$HOME/Documents/projects"                            # where projects live
+
+confirm() {  # ask on the terminal; refuse if there isn't one
+  [ -t 0 ] || { echo "pis: $1, refusing (no terminal to confirm)" >&2; exit 1; }
+  read -r -p "pis: $1. Open anyway? [y/N] " ans </dev/tty
+  [[ "$ans" == [yY]* ]] || exit 1
+}
+
+# Never expose your whole home folder (or the whole system).
+# Elsewhere outside your projects folder, ask first: places like ~/dotfiles
+# hold things your real computer runs (shell config, this launcher).
 case "$PROJ" in
   "$HOME"|/) echo "pis: run this inside a project folder, not $PROJ" >&2; exit 1;;
+  "$ALLOWED") confirm "$PROJ is your whole projects folder (every project at once)";;
+  "$ALLOWED"/*) ;;
+  *) confirm "$PROJ is outside $ALLOWED";;
 esac
 
-mkdir -p "$SBX_HOME/.pi/agent"
+# A folder holding other git repos exposes their hooks (only this folder's are made read-only below)
+if [ ! -d "$PROJ/.git" ] && find "$PROJ" -mindepth 2 -maxdepth 4 -name .git -print -quit | grep -q .; then
+  confirm "$PROJ contains other git repos"
+fi
+
+mkdir -p "$SBX_HOME/.pi/agent" "$SBX_HOME/.cache/jiti"
 
 args=(
   --rm -it --init
@@ -18,6 +36,7 @@ args=(
   --cap-drop=all --security-opt=no-new-privileges # no admin powers inside
   -e HOME=/home/agent -e TERM -e COLORTERM
   -v "$SBX_HOME:/home/agent"                      # caches etc. (per machine)
+  -v "$SBX_HOME/.cache/jiti:/tmp/jiti"            # keep compiled extensions between runs (~1.3s faster startup)
   -v "$PI_DIR/agent:/home/agent/.pi/agent"        # pi config from this repo (logins/sessions are gitignored)
   -v "$PROJ:$PROJ"                                # the project, at the same path as outside
   -w "$PROJ"
