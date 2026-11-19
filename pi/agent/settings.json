@@ -4,7 +4,7 @@
   "defaultTools": [
     "+codemode"
   ],
-  "lastChangelogVersion": "1.2.0",
+  "lastChangelogVersion": "1.5.0",
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question"
@@ -15,5 +15,8 @@
     "opencode-go/longcat-2.5-preview-free",
     "opencode-go/deepseek-v4-pro"
   ],
-  "theme": "dark"
+  "theme": "dark",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.46.0"
+  }
 }
